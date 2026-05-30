@@ -15,3 +15,5 @@ The main risk of proxy-based prediction is that the proxy may not perfectly repr
 Interpretable models such as Logistic Regression with Weight of Evidence (WoE) provide transparency and are easier to justify to regulators. However, they may achieve lower predictive performance.
 
 More advanced models such as Gradient Boosting or XGBoost often provide higher predictive accuracy but are harder to explain. In regulated financial environments, a balance must be found between predictive power and explainability.
+
+Author: Bisrat Tamrat Bekele
