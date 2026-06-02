@@ -16,4 +16,19 @@ Interpretable models such as Logistic Regression with Weight of Evidence (WoE) p
 
 More advanced models such as Gradient Boosting or XGBoost often provide higher predictive accuracy but are harder to explain. In regulated financial environments, a balance must be found between predictive power and explainability.
 
+## Project Setup
+
+### Install Dependencies
+
+`bash
+pip install -r requirements.txt
+## Dataset
+
+This project uses the Xente transaction dataset provided as part of the 10 Academy Week 4 Challenge.
+
+Dataset location:
+
+data/raw/data.csv
+The dataset contains transaction-level records including customer identifiers, transaction amounts, product categories, channels, timestamps, and fraud indicators.
+
 Author: Bisrat Tamrat Bekele
