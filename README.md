@@ -246,4 +246,16 @@ The solution includes:
 
 The resulting system provides a practical framework for estimating customer credit risk in situations where traditional loan repayment history is unavailable.
 
+Credit Risk Model
+
+Business Problem
+
+Banks and financial institutions lose money when borrowers fail to repay their loans. Traditional manual credit assessment can be slow, inconsistent, and difficult to scale when processing large numbers of applications.
+
+This project uses historical customer and loan data to predict the likelihood that a borrower will default. By identifying high-risk applicants early, the model can support faster lending decisions, reduce default risk, and improve the reliability of the credit approval process.
+
+Solution Overview
+
+The project cleans and preprocesses customer data, engineers predictive features, trains a machine learning model, and evaluates its performance using standard classification metrics. The goal is to provide a transparent and reproducible credit risk prediction pipeline that can be improved and deployed in a production environment.
+
 Author: Bisrat Tamrat Bekele
