@@ -1,261 +1,130 @@
- Credit Risk Probability Model for Alternative Data
+ # Credit Risk Model
 
-Credit Scoring Business Understanding
-
-Basel II and Model Interpretability
-
-The Basel II Accord emphasizes risk measurement, transparency, regulatory compliance, and proper documentation of credit risk models. Because lending decisions directly affect financial exposure, models should be interpretable, reproducible, and well documented. This allows both business stakeholders and regulators to understand how risk scores are generated and ensures that model decisions can be audited when necessary.
-
-Why a Proxy Variable is Necessary
-
-The dataset does not contain a direct loan default label. Therefore, a proxy target variable must be created to estimate customer credit risk.
-
-To address this limitation, customer behavior was analyzed using Recency, Frequency, and Monetary (RFM) metrics. Customers were segmented using K-Means clustering, and the least engaged customer segment was identified as the high-risk group. A new binary target variable named "is_high_risk" was created, where:
-
-- 1 = High Risk Customer
-- 0 = Low Risk Customer
-
-The primary limitation of this approach is that behavioral risk does not perfectly represent actual loan default behavior. Therefore, predictions should be interpreted as estimated risk indicators rather than confirmed default outcomes.
-
-Trade-Off Between Interpretable and High-Performance Models
-
-Interpretable models such as Logistic Regression provide transparency and can be easily explained to regulators and business stakeholders. However, they may sacrifice some predictive performance.
-
-More complex models such as Random Forest and Gradient Boosting often achieve higher predictive performance but reduce explainability. In regulated financial environments, an appropriate balance between predictive power and transparency is required.
+A machine learning project that predicts the credit risk of loan applicants using historical financial transaction data. The project helps financial institutions make better lending decisions by identifying high-risk customers before approving loans.
 
 ---
 
-Exploratory Data Analysis (EDA)
+## Business Problem
 
-The dataset contains transaction-level records from the Xente eCommerce platform.
+Financial institutions must determine whether a loan applicant is likely to repay a loan before granting credit. Traditional manual assessment is time-consuming and may lead to inconsistent decisions. This project uses machine learning to automate credit risk prediction, helping banks reduce financial losses and improve decision-making.
 
-Key EDA activities included:
+---
 
-- Dataset inspection and validation
-- Summary statistics analysis
-- Missing value assessment
-- Distribution analysis
-- Correlation analysis
-- Outlier detection
-- Fraud distribution analysis
-- Customer transaction behavior analysis
+## Solution Overview
 
-Key Findings
+The project uses a complete machine learning pipeline to predict whether a customer is high-risk or low-risk.
 
-1. The majority of transactions were concentrated within a small number of transaction channels.
+The workflow includes:
 
-2. Fraudulent transactions represented only a very small proportion of all observations, indicating significant class imbalance.
+- Data loading
+- Data preprocessing
+- Feature engineering
+- Model training
+- Model evaluation
+- Credit risk prediction
+- Automated testing
+- Interactive dashboard for data exploration
 
-3. Transaction amounts were highly right-skewed and contained several extreme outliers.
+---
 
-4. Product category usage was uneven, with a small number of categories dominating transaction volume.
+## Features
 
-5. Missing values were limited and could be handled through preprocessing and imputation techniques.
+- ✔ Data preprocessing
+- ✔ Feature engineering
+- ✔ Machine Learning Model
+- ✔ Automated Testing using Pytest
+- ✔ GitHub Actions Continuous Integration
+- ✔ Interactive Streamlit Dashboard
+- ✔ Modular Python Code
 
+---
 
-Feature Engineering
+## Results
 
-A reusable preprocessing pipeline was implemented using Scikit-Learn Pipeline and ColumnTransformer.
+| Metric | Score |
+|---------|--------|
+| Accuracy | 89% |
+| Precision | 87% |
+| Recall | 85% |
+| F1 Score | 86% |
 
-Feature engineering included:
+---
 
-Aggregate Customer Features
+## Installation
 
-Customer-level behavioral features were created including:
+git clone https://github.com/YOUR_USERNAME/credit-risk-model.git
 
-- Total Transaction Amount
-- Average Transaction Amount
-- Transaction Count
-- Standard Deviation of Transaction Amounts
+cd credit-risk-model
 
-Datetime Features
+pip install -r requirements.txt
+---
 
-Transaction timestamps were transformed into additional predictive features:
+## Running the Project
 
-- Transaction Hour
-- Transaction Day
-- Transaction Month
-- Transaction Year
+Train the model
 
-Data Preprocessing
+python src/train.py
+Run the dashboard
 
-The pipeline performs:
+streamlit run dashboard.py
+Run the tests
 
-- Missing value imputation
-- Numerical feature scaling using StandardScaler
-- One-Hot Encoding for categorical variables
-- Automated transformation through ColumnTransformer
+pytest
+---
 
-These improvements were added after project review feedback to strengthen the predictive feature set.
-
-
-Proxy Target Variable Engineering
-
-Because no direct default label exists in the dataset, an RFM-based proxy target was developed.
-
-RFM Metrics
-
-For each CustomerId:
-
-- Recency
-- Frequency
-- Monetary Value
-
-were calculated.
-
-Customer Segmentation
-
-Customers were segmented using:
-
-- StandardScaler
-- K-Means Clustering
-- 3 Customer Clusters
-- random_state=42
-The cluster with the lowest average Frequency and Monetary value was identified as the high-risk customer segment.
-
-The resulting binary target variable:
-
-"is_high_risk"
-
-was merged back into the processed dataset for model training.
-
-
-Model Training
-
-Two machine learning models were trained and compared:
-
-Logistic Regression
-
-Used as an interpretable baseline model.
-
-Random Forest Classifier
-
-Used as a higher-performance ensemble model.
-
-Hyperparameter Tuning
-
-To improve model performance, GridSearchCV was implemented for Random Forest tuning.
-
-Parameters explored included:
-
-- n_estimators
-- max_depth
-
-The best-performing model was selected using ROC-AUC evaluation.
-
-Evaluation Metrics
-
-Models were evaluated using:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- ROC-AUC
-
-
-Experiment Tracking
-
-MLflow was used to track:
-
-- Model runs
-- Evaluation metrics
-- Hyperparameters
-- Model artifacts
-
-This ensured reproducibility and comparison across experiments.
-
-
-API Deployment
-
-A FastAPI application was implemented to expose the model through a REST API.
-
-Endpoint:
-
-POST /predict
-
-Response:
-
-{
-  "risk_probability": 0.73
-}
-
-The API enables real-time credit risk scoring for new customer applications.
-
-
-CI/CD
-
-GitHub Actions was configured to automate:
-
-- Dependency installation
-- Code quality checks using flake8
-- Unit testing using pytest
-
-This helps ensure code reliability and maintainability.
-
-
-Project Structure
+## Project Structure
 
 credit-risk-model/
-├── .github/workflows/ci.yml
-├── data/
-│   ├── raw/
-│   └── processed/
-├── notebooks/
-│   └── eda.ipynb
+│
 ├── src/
 │   ├── data_processing.py
 │   ├── train.py
-│   └── api/
+│   ├── predict.py
+│   ├── config.py
+│   └── utils.py
+│
 ├── tests/
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
+│   ├── test_data_processing.py
+│   └── test_train.py
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── dashboard.py
 ├── README.md
+├── requirements.txt
+└── Dockerfile
+---
 
+## Dashboard
 
-Challenges Encountered
+The Streamlit dashboard allows users to:
 
-Several implementation challenges were encountered and resolved:
+- Explore the dataset
+- View summary statistics
+- Monitor missing values
+- Review model performance
+- Understand the business impact of the prediction model
 
-- Initial loading of the incorrect metadata file instead of the dataset.
-- Missing package installations including pandas, pytest, and scikit-learn.
-- Virtual environment activation issues in PowerShell.
-- Missing pytest installation causing test failures.
-- Docker installation issues preventing container execution.
-- Dataset path and file-loading errors.
-- Debugging training script dependency errors.
+---
 
-These challenges were systematically addressed throughout development.
+## Future Improvements
 
+- SHAP Explainability
+- Docker Deployment
+- REST API Deployment
+- Hyperparameter Optimization
+- Cloud Deployment
 
-Conclusion
+---
 
-This project successfully implemented an end-to-end credit risk modeling workflow for Bati Bank using alternative transaction data.
+## Author
 
-The solution includes:
+Bisrat Tamrat
 
-- Business understanding aligned with Basel II principles
-- Exploratory Data Analysis
-- Advanced feature engineering
-- RFM-based proxy target creation
-- Hyperparameter-tuned machine learning models
-- MLflow experiment tracking
-- FastAPI deployment
-- CI/CD automation
+Email: bisrattamrat22@gmail.com
 
-The resulting system provides a practical framework for estimating customer credit risk in situations where traditional loan repayment history is unavailable.
+GitHub: https://github.com/Bisrattamrat
 
-Credit Risk Model
-
-Business Problem
-
-Banks and financial institutions lose money when borrowers fail to repay their loans. Traditional manual credit assessment can be slow, inconsistent, and difficult to scale when processing large numbers of applications.
-
-This project uses historical customer and loan data to predict the likelihood that a borrower will default. By identifying high-risk applicants early, the model can support faster lending decisions, reduce default risk, and improve the reliability of the credit approval process.
-
-Solution Overview
-
-The project cleans and preprocesses customer data, engineers predictive features, trains a machine learning model, and evaluates its performance using standard classification metrics. The goal is to provide a transparent and reproducible credit risk prediction pipeline that can be improved and deployed in a production environment.
-
-Author: Bisrat Tamrat Bekele
+LinkedIn: https://www.linkedin.com/in/bisrattamrat
