@@ -76,5 +76,5 @@ def train_model() -> None:
     print(f"Best ROC AUC: {best_auc:.3f}")
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     train_model()

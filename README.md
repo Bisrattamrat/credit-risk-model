@@ -2,13 +2,9 @@
 
 A machine learning project that predicts the credit risk of loan applicants using historical financial transaction data. The project helps financial institutions make better lending decisions by identifying high-risk customers before approving loans.
 
----
-
 ## Business Problem
 
 Financial institutions must determine whether a loan applicant is likely to repay a loan before granting credit. Traditional manual assessment is time-consuming and may lead to inconsistent decisions. This project uses machine learning to automate credit risk prediction, helping banks reduce financial losses and improve decision-making.
-
----
 
 ## Solution Overview
 
@@ -25,8 +21,6 @@ The workflow includes:
 - Automated testing
 - Interactive dashboard for data exploration
 
----
-
 ## Features
 
 - ✔ Data preprocessing
@@ -37,7 +31,6 @@ The workflow includes:
 - ✔ Interactive Streamlit Dashboard
 - ✔ Modular Python Code
 
----
 
 ## Results
 
@@ -48,8 +41,6 @@ The workflow includes:
 | Recall | 85% |
 | F1 Score | 86% |
 
----
-
 ## Installation
 
 git clone https://github.com/YOUR_USERNAME/credit-risk-model.git
@@ -57,7 +48,6 @@ git clone https://github.com/YOUR_USERNAME/credit-risk-model.git
 cd credit-risk-model
 
 pip install -r requirements.txt
----
 
 ## Running the Project
 
@@ -70,7 +60,6 @@ streamlit run dashboard.py
 Run the tests
 
 pytest
----
 
 ## Project Structure
 
@@ -95,7 +84,6 @@ credit-risk-model/
 ├── README.md
 ├── requirements.txt
 └── Dockerfile
----
 
 ## Dashboard
 
@@ -107,8 +95,6 @@ The Streamlit dashboard allows users to:
 - Review model performance
 - Understand the business impact of the prediction model
 
----
-
 ## Future Improvements
 
 - SHAP Explainability
@@ -117,7 +103,9 @@ The Streamlit dashboard allows users to:
 - Hyperparameter Optimization
 - Cloud Deployment
 
----
+## Model Explainability
+
+SHAP (SHapley Additive exPlanations) was used to improve the interpretability of the machine learning model. The generated feature importance visualization highlights which variables have the greatest influence on credit risk predictions, helping stakeholders understand and trust the model's decisions.
 
 ## Author
 
