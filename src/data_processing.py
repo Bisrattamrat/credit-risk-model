@@ -1,100 +1,63 @@
 import pandas as pd
-
-from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-
-def load_data(file_path):
-    """
-    Load transaction data from CSV.
-    """
-    try:
-        df = pd.read_csv(file_path)
-
-        if df.empty:
-            raise ValueError("Dataset is empty.")
-
-        return df
-
-    except FileNotFoundError:
-        raise FileNotFoundError(
-            f"File not found: {file_path}"
-        )
+NUMERIC_TYPES = ["int64", "float64"]
+CATEGORICAL_TYPES = ["object"]
 
 
-def check_missing_values(df):
-    """
-    Return missing value counts.
-    """
+def load_data(file_path: str) -> pd.DataFrame:
+    """Load a CSV dataset."""
+
+    df = pd.read_csv(file_path)
+
+    if df.empty:
+        raise ValueError("Dataset is empty.")
+
+    return df
+
+
+def check_missing_values(df: pd.DataFrame) -> pd.Series:
+    """Return missing values."""
     return df.isnull().sum()
 
 
-def get_summary_statistics(df):
-    """
-    Return summary statistics.
-    """
+def get_summary_statistics(df: pd.DataFrame) -> pd.DataFrame:
+    """Return summary statistics."""
     return df.describe()
 
 
-def create_pipeline(df):
-    """
-    Create preprocessing pipeline.
-    """
+def create_pipeline(df: pd.DataFrame) -> ColumnTransformer:
+    """Create preprocessing pipeline."""
 
-    numeric_features = df.select_dtypes(
-        include=["int64", "float64"]
-    ).columns.tolist()
+    numeric_features = df.select_dtypes(include=NUMERIC_TYPES).columns.tolist()
 
-    categorical_features = df.select_dtypes(
-        include=["object"]
-    ).columns.tolist()
+    categorical_features = df.select_dtypes(include=CATEGORICAL_TYPES).columns.tolist()
 
-    numeric_transformer = Pipeline(
-        steps=[
+    numeric_pipeline = Pipeline(
+        [
             ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler())
+            ("scaler", StandardScaler()),
         ]
     )
 
-    categorical_transformer = Pipeline(
-        steps=[
+    categorical_pipeline = Pipeline(
+        [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("onehot", OneHotEncoder(handle_unknown="ignore"))
+            ("encoder", OneHotEncoder(handle_unknown="ignore")),
         ]
     )
 
-    preprocessor = ColumnTransformer(
-        transformers=[
-            (
-                "num",
-                numeric_transformer,
-                numeric_features
-            ),
-            (
-                "cat",
-                categorical_transformer,
-                categorical_features
-            )
+    return ColumnTransformer(
+        [
+            ("num", numeric_pipeline, numeric_features),
+            ("cat", categorical_pipeline, categorical_features),
         ]
     )
 
-    return preprocessor
 
-
-if __name__ == "__main__":
-
+if __name__ == "main":
     df = load_data("data/raw/data.csv")
-
-    print("Shape:", df.shape)
-
-    print("\nMissing Values:")
-    print(check_missing_values(df))
-
-    print("\nSummary Statistics:")
-    print(get_summary_statistics(df))
-
-    pipeline = create_pipeline(df)
-
-    print("\nPipeline Created Successfully")
+    print(df.head())
